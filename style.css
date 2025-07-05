@@ -1,0 +1,96 @@
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.main-container {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 25px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+}
+
+.header {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    padding: 2.5rem;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+}
+
+/* Tabs Styling */
+.nav-pills .nav-link {
+    border-radius: 12px;
+    font-weight: 500;
+    color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link.active {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.cycle-card {
+    border-radius: 15px;
+    color: white;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.cycle-time {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.recommendation {
+    background: #84fab0;
+    color: white;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.calc-btn {
+    background: #667eea !important;
+    border: none !important;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.calc-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4) !important;
+}
+
+.sleep-info {
+    background: #f8f9fa;
+    padding: 1.8rem;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.modal-content {
+    border-radius: 15px;
+}
+.modal-header {
+    border-bottom: none;
+}
