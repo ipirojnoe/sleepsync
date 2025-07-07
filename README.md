@@ -1,6 +1,6 @@
 # SleepSync - Sleep Cycle Calculator
 
-![Screenshot](https://github.com/ipirojnoe/sleepsync/raw/master/img/screenshot.png)
+<img height="500px" src="https://github.com/ipirojnoe/sleepsync/blob/main/img/screenshot.png">
 
 A modern, responsive web app to help you calculate the optimal time to wake up or go to sleep based on natural 90-minute sleep cycles.
 
