@@ -1,116 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SleepSync - Sleep Cycle Calculator</title>
-    <meta name="description" content="Optimize your sleep with natural 90-minute sleep cycles.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💤</text></svg>">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="meta_title">SleepSync - Advanced Sleep Cycle Calculator</title>
 
-    <!-- Preconnect to Google Fonts for faster loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="description" content="Calculate your optimal bedtime and wake-up time based on scientific sleep cycle data. Use our simple or advanced personalized calculator for better sleep." data-i18n="meta_description" data-i18n-attr="content">
+<meta name="keywords" content="sleep calculator, sleep cycle, rem sleep, bedtime calculator, sleep science, wake up time">
+<meta property="og:title" content="SleepSync - Advanced Sleep Cycle Calculator">
+<meta property="og:description" content="Optimize your sleep with a calculator that adapts to your personal biological rhythms.">
+<meta property="og:image" content="https://sleepsync.pro/screenshots/screenshot.png">
+<meta property="og:url" content="https://sleepsync.pro">
+<meta property="og:type" content="website">
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-54N58CLPS2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-54N58CLPS2');
-    </script>
+<link rel="icon" href="assets/icons/favicon.ico">
+<link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4facfe">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link href="style.css" rel="stylesheet">
-    <!-- Ubuntu Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="main-container">
-                    <div class="header">
-                        <h1>😴 SleepSync</h1>
-                        <p class="mb-0">Optimize your sleep with 90-minute cycles</p>
-                    </div>
+<body class="d-flex flex-column min-vh-100">
+<header class="app-header navbar navbar-expand-sm sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="index.html" data-i18n="appTitle">😴 SleepSync</a>
 
-                    <div class="p-4">
-                        <!-- Tabs -->
-                        <ul class="nav nav-pills nav-justified bg-light rounded-3 p-1 mb-4" id="sleepTabs" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="now-tab" data-bs-toggle="pill" data-bs-target="#now" type="button" role="tab" aria-controls="now" aria-selected="true">
-                                    Sleep Now
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="wakeup-tab" data-bs-toggle="pill" data-bs-target="#wakeup" type="button" role="tab" aria-controls="wakeup" aria-selected="false">
-                                    Wake Up At
-                                </button>
-                            </li>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="d-sm-flex justify-content-sm-center w-100">
+                <nav class="navbar-nav text-center flex-grow-1 justify-content-center">
+                    <a class="nav-link active" href="index.html" data-i18n="nav_calculator">Calculator</a>
+                    <a class="nav-link" href="science.html" data-i18n="nav_science">The Science</a>
+                </nav>
+
+                <div class="d-flex flex-column flex-sm-row align-items-center mt-3 mt-sm-0" id="settings-controls">
+                    <div class="dropdown mx-2 mb-2 mb-sm-0">
+                        <button class="btn btn-sm btn-outline-light" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Choose language">
+                            <span id="lang-btn-text">🇺🇸 EN</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" id="lang-dropdown">
+                            <li><a class="dropdown-item" href="#" data-lang="en">🇺🇸 EN</a></li>
+                            <li><a class="dropdown-item" href="#" data-lang="ru">🇷🇺 RU</a></li>
                         </ul>
-
-                        <!-- Tab Content -->
-                        <div class="tab-content" id="sleepTabsContent">
-                            <div class="tab-pane fade show active" id="now" role="tabpanel" aria-labelledby="now-tab">
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-light" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-i18n="settings" aria-label="Open settings menu" data-bs-auto-close="outside">
+                            ⚙️ Settings
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end p-3" id="settings-menu" style="min-width: 300px;">
+                            <h6 class="dropdown-header" data-i18n="settings">Settings</h6>
+                            <div class="mb-3">
+                                <label for="fallAsleepTime" class="form-label" data-i18n="fallAsleepTimeLabel">Time to fall asleep (min)</label>
+                                <input type="number" class="form-control form-control-sm" id="fallAsleepTime" value="14" min="0" max="60">
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="includeFallAsleep" checked>
+                                <label class="form-check-label" for="includeFallAsleep" data-i18n="includeFallAsleep">Include in calculation</label>
+                            </div>
                                 <div class="mb-3">
-                                    <label for="currentTime" class="form-label fw-bold">Current Time</label>
-                                    <input type="time" class="form-control form-control-lg" id="currentTime" required>
-                                </div>
-                                <button class="btn btn-lg btn-primary calc-btn w-100" id="calculateNowBtn">
-                                    Calculate Wake Up Times
-                                </button>
+                                <label for="customCycleLength" class="form-label" data-i18n="customCycleLengthLabel">Custom Cycle Length (min)</label>
+                                <input type="number" class="form-control form-control-sm" id="customCycleLength" placeholder="e.g. 96" min="70" max="120">
+                                <div class="form-text" data-i18n="customCycleLengthNote">Overrides Simple Mode default. Advanced Mode always calculates it.</div>
                             </div>
-                            <div class="tab-pane fade" id="wakeup" role="tabpanel" aria-labelledby="wakeup-tab">
-                                <div class="mb-3">
-                                    <label for="wakeupTime" class="form-label fw-bold">Desired Wake-up Time</label>
-                                    <input type="time" class="form-control form-control-lg" id="wakeupTime" required>
-                                </div>
-                                <button class="btn btn-lg btn-primary calc-btn w-100" id="calculateWakeupBtn">
-                                    Calculate Bedtimes
-                                </button>
+                            <hr>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="theme-switcher">
+                                <label class="form-check-label" for="theme-switcher" data-i18n="darkMode">Dark Mode</label>
                             </div>
-                        </div>
-
-                        <!-- Results -->
-                        <div id="results" class="mt-4" style="display: none;">
-                            <div class="sleep-info">
-                                <h5>🕒 Cycle Information</h5>
-                                <p class="mb-0">It takes about 14 minutes to fall asleep. Each cycle is 90 minutes.</p>
-                            </div>
-                            <div id="cyclesContainer"></div>
-                            <div id="recommendation" class="recommendation" style="display: none;">
-                                <h5>✨ Recommendation</h5>
-                                <p id="recText" class="mb-0"></p>
-                            </div>
-                             <button class="btn btn-secondary w-100 mt-3" id="shareBtn" style="display: none;">Share Results</button>
+                            <button class="btn btn-secondary btn-sm w-100" id="resetSettingsBtn" data-i18n="resetSettings">Reset to defaults</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</header>
 
-    <!-- Bootstrap Modal -->
-    <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body"><p id="modalMsg"></p></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+<main class="container my-5 flex-shrink-0">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="main-container card">
+                <div class="card-body p-4 p-md-5">
+                    <ul class="nav nav-tabs nav-fill mb-4" id="modeTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="simple-mode-tab" data-bs-toggle="tab" data-bs-target="#simple-mode-pane" type="button" role="tab" aria-controls="simple-mode-pane" aria-selected="true" data-i18n="simpleMode">Simple Mode</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="advanced-mode-tab" data-bs-toggle="tab" data-bs-target="#advanced-mode-pane" type="button" role="tab" aria-controls="advanced-mode-pane" aria-selected="false" data-i18n="advancedMode">Advanced Mode</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="modeTabsContent">
+                        <!-- Simple Mode -->
+                        <div class="tab-pane fade show active" id="simple-mode-pane" role="tabpanel">
+                            <ul class="nav nav-pills nav-justified bg-body-tertiary rounded-3 p-1 mb-4" id="simpleModeTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="now-tab" data-bs-toggle="pill" data-bs-target="#now-panel" type="button" role="tab" aria-selected="true" data-i18n="sleepNow">Sleep Now</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="wakeup-tab" data-bs-toggle="pill" data-bs-target="#wakeup-panel" type="button" role="tab" aria-selected="false" data-i18n="wakeUpAt">Wake Up At</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="simpleModeTabsContent">
+                                <div class="tab-pane fade show active" id="now-panel" role="tabpanel">
+                                    <div class="mb-3">
+                                        <label for="currentTime" class="form-label fw-bold" data-i18n="currentTime">Current Time</label>
+                                        <input type="time" class="form-control form-control-lg" id="currentTime" required>
+                                    </div>
+                                    <button class="btn btn-lg btn-primary calc-btn w-100" id="calculateNowBtn" data-i18n="calcWakeUp">Calculate Wake Up Times</button>
+                                </div>
+                                <div class="tab-pane fade" id="wakeup-panel" role="tabpanel">
+                                    <div class="mb-3">
+                                        <label for="wakeupTime" class="form-label fw-bold" data-i18n="desiredWakeUp">Desired Wake-up Time</label>
+                                        <input type="time" class="form-control form-control-lg" id="wakeupTime" required>
+                                    </div>
+                                    <button class="btn btn-lg btn-primary calc-btn w-100" id="calculateWakeupBtn" data-i18n="calcBedtime">Calculate Bedtimes</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Mode -->
+                        <div class="tab-pane fade" id="advanced-mode-pane" role="tabpanel">
+                            <div class="text-center mb-4">
+                                <h2 class="h4" data-i18n="advancedTitle">Personalized Calculation</h2>
+                                <p class="text-muted" data-i18n="advancedDescription">Answer questions to get a sleep schedule tailored to your personal biological rhythms.</p>
+                            </div>
+
+                            <form id="surveyForm" class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="age" class="form-label" data-i18n="q_age">Age</label>
+                                    <input type="number" class="form-control" id="age" min="12" max="100" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="gender" class="form-label" data-i18n="q_gender">Sex</label>
+                                    <select class="form-select" id="gender" required>
+                                        <option value="male" data-i18n="gender_male">Male</option>
+                                        <option value="female" data-i18n="gender_female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="chronotype" class="form-label" data-i18n="q_chronotype">Chronotype</label>
+                                    <select class="form-select" id="chronotype" required>
+                                        <option value="lark" data-i18n="chronotype_lark">Morning Person (Lark)</option>
+                                        <option value="neutral" data-i18n="chronotype_neutral">In between</option>
+                                        <option value="owl" data-i18n="chronotype_owl">Night Owl</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="caffeine" class="form-label" data-i18n="q_caffeine">Daily Caffeine Intake</label>
+                                    <select class="form-select" id="caffeine" required>
+                                        <option value="none" data-i18n="caffeine_none">None</option>
+                                        <option value="low" selected data-i18n="caffeine_low">Low (1-2 cups)</option>
+                                        <option value="moderate" data-i18n="caffeine_moderate">Moderate (3-4 cups)</option>
+                                        <option value="high" data-i18n="caffeine_high">High (5+ cups)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exercise" class="form-label" data-i18n="q_exercise_timing">Exercise Timing</label>
+                                    <select class="form-select" id="exercise" required>
+                                        <option value="none" data-i18n="exercise_none">None / Sedentary</option>
+                                        <option value="morning" data-i18n="exercise_morning">Morning</option>
+                                        <option value="afternoon" data-i18n="exercise_afternoon">Afternoon</option>
+                                        <option value="evening" data-i18n="exercise_evening">Evening (2+ hours before bed)</option>
+                                    </select>
+                                </div>
+                                    <div class="col-md-6">
+                                    <label for="stress" class="form-label" data-i18n="q_stress">Current Stress Level</label>
+                                    <select class="form-select" id="stress" required>
+                                        <option value="low" data-i18n="stress_low">Low</option>
+                                        <option value="moderate" selected data-i18n="stress_moderate">Moderate</option>
+                                        <option value="high" data-i18n="stress_high">High</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label for="wakeupTimeAdvanced" class="form-label fw-bold" data-i18n="desiredWakeUp">Desired Wake-up Time</label>
+                                    <input type="time" class="form-control form-control-lg" id="wakeupTimeAdvanced" required>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-lg btn-success calc-btn w-100" data-i18n="calcPersonalized">Calculate Personalized Bedtimes</button>
+                                </div>
+                            </form>
+                            
+                            <div class="accordion mt-4" id="fallAsleepAccordion">
+                                <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" data-i18n="optionalFallAsleepTitle">
+                                    Optional: Calculate Personalized Time to Fall Asleep
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#fallAsleepAccordion">
+                                    <div class="accordion-body">
+                                    <p class="text-muted small" data-i18n="optionalFallAsleepDesc">Answer these questions to estimate how long it takes you to fall asleep.</p>
+                                    <div class="mb-3">
+                                        <label for="usualFallTime" class="form-label" data-i18n="q_usualFallTime">How long do you think it usually takes you to fall asleep?</label>
+                                        <select class="form-select" id="usualFallTime">
+                                            <option value="10" data-i18n="fallTime_10">Less than 10 minutes</option>
+                                            <option value="20" selected data-i18n="fallTime_20">15-30 minutes</option>
+                                            <option value="45" data-i18n="fallTime_45">30-60 minutes</option>
+                                            <option value="60" data-i18n="fallTime_60">More than 1 hour</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="relaxationLevel" class="form-label" data-i18n="q_relaxationLevel">How relaxed do you feel before bed?</label>
+                                            <select class="form-select" id="relaxationLevel">
+                                            <option value="-5" data-i18n="relax_stress">Very Stressed / Anxious</option>
+                                            <option value="0" selected data-i18n="relax_neutral">Neutral / Normal</option>
+                                            <option value="5" data-i18n="relax_relaxed">Very Relaxed</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-outline-primary btn-sm" id="calculateFallTimeBtn" data-i18n="calculateAndApply">Calculate and Apply</button>
+                                    <p id="fallTimeResult" class="mt-2 fw-bold"></p>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div id="results" class="mt-4" style="display: none;" aria-live="polite">
+                        <div id="advanced-explanation" class="mb-3"></div>
+                        <div id="cyclesContainer" class="d-grid gap-2"></div>
+                        <div id="recommendation" class="alert alert-primary mt-4" style="display: none;">
+                            <p id="recText" class="mb-0"></p>
+                        </div>
+                            <div class="d-flex gap-2 mt-3 flex-wrap">
+                            <button class="btn btn-outline-secondary flex-fill" id="shareBtn" style="display: none;" data-i18n="shareResults">Share Results</button>
+                            <button class="btn btn-outline-secondary flex-fill" id="exportTxtBtn" style="display: none;" data-i18n="exportTxt">Export to Text</button>
+                            <button class="btn btn-outline-secondary flex-fill" id="exportIcsBtn" style="display: none;" data-i18n="exportIcs">Add to Calendar</button>
+                        </div>
+                        <div id="text-export-area" class="mt-3" style="display: none;">
+                            <textarea class="form-control" id="text-export-content" rows="8" readonly></textarea>
+                            <button class="btn btn-success btn-sm mt-2" id="copyExportBtn" data-i18n="copy">Copy to Clipboard</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</main>
 
-    <!-- Bootstrap & App JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
-    <script src="app.js" defer></script>
+<footer class="container text-center mt-auto py-3">
+    <small class="text-muted" data-i18n="footer_note">Made with ❤️. For educational purposes only.</small>
+</footer>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="js/translations.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/calculator.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
