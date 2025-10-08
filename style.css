@@ -101,4 +101,11 @@ body {
     }
     .main-container { margin: 0.5rem; }
     .card-body { padding: 1.5rem !important; }
+    #settings-controls .dropdown-menu,
+    #settings-controls-science .dropdown-menu {
+        left: 50% !important;
+        transform: translateX(-50%);
+        right: auto !important;
+        width: min(90vw, 320px);
+    }
 }
