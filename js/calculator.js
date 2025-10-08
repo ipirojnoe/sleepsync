@@ -23,8 +23,6 @@ const Calculator = (function() {
             return null;
         }
 
-        localStorage.setItem(`lastTime_${type}`, timeInput.value);
-        
         const baseMins = timeToMinutes(timeInput.value);
         const fallAsleepOffset = settings.includeFallAsleep ? settings.fallAsleepTime : 0;
         // let user override the cycle length, or use the default.
