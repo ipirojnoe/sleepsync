@@ -88,22 +88,30 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.id === 'resetSettingsBtn') resetSettings();
         });
         
-        elements.calculateNowBtn.onclick = () => doCalculation('simple', 'now');
-        elements.calculateWakeupBtn.onclick = () => doCalculation('simple', 'wakeup');
-        elements.surveyForm.onsubmit = (e) => {
-            e.preventDefault();
-            doCalculation('advanced');
-        };
-        
-        elements.shareBtn.onclick = shareResults;
-        elements.exportTxtBtn.onclick = exportToText;
-        elements.copyExportBtn.onclick = copyExportedText;
-        elements.exportIcsBtn.onclick = exportToCalendar;
-        
+        if (elements.calculateNowBtn) {
+            elements.calculateNowBtn.onclick = () => doCalculation('simple', 'now');
+        }
+        if (elements.calculateWakeupBtn) {
+            elements.calculateWakeupBtn.onclick = () => doCalculation('simple', 'wakeup');
+        }
+        if (elements.surveyForm) {
+            elements.surveyForm.onsubmit = (e) => {
+                e.preventDefault();
+                doCalculation('advanced');
+            };
+        }
+
+        if (elements.shareBtn) elements.shareBtn.onclick = shareResults;
+        if (elements.exportTxtBtn) elements.exportTxtBtn.onclick = exportToText;
+        if (elements.copyExportBtn) elements.copyExportBtn.onclick = copyExportedText;
+        if (elements.exportIcsBtn) elements.exportIcsBtn.onclick = exportToCalendar;
+
         elements.modeTabs.forEach(tab => tab.addEventListener('shown.bs.tab', handleModeTabChange));
         elements.simpleModeTabs.forEach(tab => tab.addEventListener('shown.bs.tab', handleSimpleModeTabChange));
 
-        elements.calculateFallTimeBtn.onclick = calcAndApplyFallTime;
+        if (elements.calculateFallTimeBtn) {
+            elements.calculateFallTimeBtn.onclick = calcAndApplyFallTime;
+        }
     }
     
     function doCalculation(mode = state.activeMode, simpleTab = state.activeSimpleTab) {
@@ -135,6 +143,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!results) return;
 
+        if (mode === 'advanced') {
+            if (results.baseTime) rememberLastTime('wakeup', results.baseTime);
+        } else if (simpleTab === 'now') {
+            rememberLastTime('now', elements.currentTimeInput?.value);
+        } else {
+            rememberLastTime('wakeup', elements.wakeupTimeInput?.value);
+        }
+
         state.resultsCache[cacheKey] = results;
         state.currentResults = results;
         UI.displayResults(results, elements, state.currentLang);
@@ -146,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         state.settings.customCycleLength = parseInt(document.getElementById('customCycleLength').value) || null;
         saveSettings();
         
-        if (elements.resultsContainer.style.display !== 'none') {
+        if (elements.resultsContainer && elements.resultsContainer.style.display !== 'none') {
             doCalculation();
         }
     }
@@ -162,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         saveSettings();
         UI.showToast(UI.translate('settingsReset', state.currentLang), 'success', elements.toastContainer);
-        if (elements.resultsContainer.style.display !== 'none') doCalculation();
+        if (elements.resultsContainer && elements.resultsContainer.style.display !== 'none') doCalculation();
     }
 
     function calcAndApplyFallTime() {
@@ -281,7 +297,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function toggleTheme() {
-        const isDark = document.getElementById('theme-switcher').checked;
+        const themeSwitch = document.getElementById('theme-switcher');
+        if (!themeSwitch) return;
+        const isDark = themeSwitch.checked;
         document.documentElement.setAttribute('data-bs-theme', isDark ? 'dark' : 'light');
         localStorage.setItem('sleepSyncTheme', isDark ? 'dark' : 'light');
     }
@@ -321,10 +339,56 @@ document.addEventListener('DOMContentLoaded', () => {
         const now = new Date();
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
-        
-        elements.currentTimeInput.value = localStorage.getItem('lastTime_now') || `${hours}:${minutes}`;
-        elements.wakeupTimeInput.value = localStorage.getItem('lastTime_wakeup') || '07:00';
-        document.getElementById('wakeupTimeAdvanced').value = localStorage.getItem('lastTime_wakeup') || '07:00';
+        const currentTime = `${hours}:${minutes}`;
+
+        const storedNow = readStoredTime('lastTime_now');
+        const storedWake = readStoredTime('lastTime_wakeup');
+
+        if (elements.currentTimeInput) {
+            const recentStoredNow = storedNow && storedNow.savedAt && (Date.now() - storedNow.savedAt) <= (10 * 60 * 1000);
+            elements.currentTimeInput.value = (recentStoredNow && storedNow.value) ? storedNow.value : currentTime;
+        }
+
+        const wakeValue = storedWake?.value || '07:00';
+        if (elements.wakeupTimeInput) {
+            elements.wakeupTimeInput.value = wakeValue;
+        }
+        const wakeupAdvancedInput = document.getElementById('wakeupTimeAdvanced');
+        if (wakeupAdvancedInput) {
+            wakeupAdvancedInput.value = wakeValue;
+        }
+    }
+
+    function isValidTimeString(value) {
+        return typeof value === 'string' && /^\d{2}:\d{2}$/.test(value);
+    }
+
+    function rememberLastTime(type, value) {
+        if (!isValidTimeString(value)) return;
+        try {
+            localStorage.setItem(`lastTime_${type}`, JSON.stringify({ value, savedAt: Date.now() }));
+        } catch (err) {
+            console.warn('Failed to save time preference', err);
+        }
+    }
+
+    function readStoredTime(key) {
+        try {
+            const raw = localStorage.getItem(key);
+            if (!raw) return null;
+
+            if (isValidTimeString(raw)) {
+                return { value: raw, savedAt: null };
+            }
+
+            const parsed = JSON.parse(raw);
+            if (parsed && isValidTimeString(parsed.value)) {
+                return { value: parsed.value, savedAt: typeof parsed.savedAt === 'number' ? parsed.savedAt : null };
+            }
+        } catch (err) {
+            console.warn('Failed to read stored time', err);
+        }
+        return null;
     }
 
     function registerServiceWorker() {
