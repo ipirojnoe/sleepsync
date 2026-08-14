@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const startTime = toISOString(eventDate);
         const endDate = toISOString(new Date(eventDate.getTime() + 5 * 60 * 1000)); 
 
-        const icsContent = `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SleepSync//EN\r\nBEGIN:VEVENT\r\nUID:${Date.now()}@sleepsync.pro\r\nDTSTAMP:${toISOString(new Date())}\r\nDTSTART:${startTime}\r\nDTEND:${endDate}\r\nSUMMARY:${eventTitle} (SleepSync)\r\nDESCRIPTION:Recommended time from SleepSync app.\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+        const icsContent = `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SleepSync//EN\r\nBEGIN:VEVENT\r\nUID:${Date.now()}@sleepsync.ipirojnoe.ru\r\nDTSTAMP:${toISOString(new Date())}\r\nDTSTART:${startTime}\r\nDTEND:${endDate}\r\nSUMMARY:${eventTitle} (SleepSync)\r\nDESCRIPTION:Recommended time from SleepSync app.\r\nEND:VEVENT\r\nEND:VCALENDAR`;
 
         const blob = new Blob([icsContent], { type: 'text/calendar' });
         const link = document.createElement('a');
