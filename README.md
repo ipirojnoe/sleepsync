@@ -5,7 +5,7 @@
 
 **SleepSync** is a modern, refined web application that helps you calculate the optimal time to go to sleep or wake up. It's built on a foundation of scientific data about natural sleep cycles, offering both a simple, quick calculator and an advanced, personalized mode.
 
-**[➡️ Try the Live Demo](https://sleepsync.pro)**
+**[➡️ Try the Live Demo](https://sleepsync.ipirojnoe.ru)**
 
 > **[🇷🇺 Read the Russian version of this document (Русская версия)](README.ru.md)**
 
